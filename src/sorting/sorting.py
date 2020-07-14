@@ -54,9 +54,43 @@ def merge_sort(arr):
 
 def merge_in_place(arr, start, mid, end):
     # Your code here
-    pass
+    start2 = mid + 1
+
+    # return if array is already sorted
+    if (arr[mid] <= arr[start2]):
+        return arr
+
+    while (start <= mid and start2 <= end):
+        # if element is in place
+        if (arr[start] <= arr[start2]):
+            start += 1
+        else:
+            value = arr[start2]
+            index = start2
+
+            # shift element
+            while (index != start):
+                arr[index] = arr[index - 1]
+                index -= 1
+
+            arr[start] = value
+
+            # update all pointers
+            start += 1
+            mid += 1
+            start2 += 1
 
 
 def merge_sort_in_place(arr, l, r):
     # Your code here
-    pass
+    if (l < r):
+
+        # Same as (l + r) / 2, but avoids overflow
+        # for large l and r
+        m = l + (r - l) // 2
+
+        # Sort first and second halves
+        merge_sort_in_place(arr, l, m)
+        merge_sort_in_place(arr, m + 1, r)
+
+        merge_in_place(arr, l, m, r)
